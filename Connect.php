@@ -29,23 +29,44 @@ if(isset($_GET['action'])){
 
 
     function toDoList($connection){
-        // $listArray = array();
+         $listArray = array();
 
-        // //Select String
-        // $q = "SELECT description, priority, dateCreated, dateCompleted FROM task;";
+         //Select String
+         $q = "SELECT description, priority, dateCreated, dateCompleted FROM task";
 
-        // //Get results
-        // $results = $connection->query($q);
+         //Get results
+         $results = $connection->query($q);
 
-        // while($info = $resutls->fetch_assoc()){
-        //     //Get each task from the DB
-        //     array_push($listArray, $info);
-        // }//End while
-        $test = array("help"=>"i", "dont"=>"know", "what"=>"I", "am"=>"doing");
-        echo json_encode($test);
+         while($info = $results->fetch_assoc()){
+             //Get each task from the DB
+             array_push($listArray, $info);
+         }//End while
+        echo json_encode($listArray);
     }//End toDoList
 
-    fucntion newTask($connection){
-        $q = "INSERT into task (description, priority, dateCreated) VALUES 
+    function newTask($connection){
+
+        echo json_encode($_POST);
+        // $task = $_POST['desc'];
+        // $priority = $_POST['priority'];
+        // $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+
+        // $q = sprintf("INSERT INTO task 
+        //                 (description, priority, dateCreated, completed, dateCompleted) 
+        //                 VALUES ('%s', '%s', '%s', '%d', '%s')",
+        //                 $task, $priority, $date, 1,  $date);
+
+        // $qRs = $conn->query($q);
+
+        // $id = $connection->insert_id;
+
+        // $jsonArray = array(
+        //     'id' => $id,
+        //     'task' => $task,
+        //     'priority' => $priority
+        //     );
+
+        // echo json_encode(jsonArray);
+
     }//End newTask
 ?>
