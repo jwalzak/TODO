@@ -11,6 +11,7 @@
         <input type="text" id="desc" name="desc" ><label>Task description</label>
         <br/>
         <select name="priority" id="priority">
+            <option name="lowest" value="1" selected="selected">!</option>
             <option name="lower" value="2">!!</option>
             <option name="middle" value="3">!!!</option>
             <option name="higher" value="4">!!!!</option>
