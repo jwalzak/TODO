@@ -25,25 +25,29 @@ if(isset($_GET['action'])){
     else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
         // $a = $_POST;
         // echo json_encode($_POST);
-        // newEntry($conn);
-        $task = $_POST['desc'];
+         // newEntry($conn);
+
+        // This won't run if it is it's own function.
+        $description = $_POST['desc'];
         $priority = (int)$_POST['priority'];
-        $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+        date_default_timezone_get("America/Toronto");
+        $date = date("Y-m-d H:i:s");
         $completed = 0;
 
         $q1 = sprintf("INSERT INTO task 
                         (description, priority, dateCreated, completed, dateCompleted) 
                         VALUES ('%s', '%d', '%s', '%d', '%s')",
-                        $task, $priority, $date, $completed,  $date);
+                        $description, $priority, $date, $completed, $date);
 
         $qRs = $conn->query($q1);
 
-        $id = $connection->insert_id;
+        $id = $conn->insert_id;
 
         $jsonArray = array(
             'id' => $id,
-            'task' => $task,
-            'priority' => $priority
+            'description' => $description,
+            'priority' => $priority,
+            'dateCreated' => $date
             );
 
         echo json_encode($jsonArray);
@@ -58,7 +62,7 @@ if(isset($_GET['action'])){
          $listArray = array();
 
          //Select String
-         $q = "SELECT description, priority, dateCreated, dateCompleted FROM task";
+         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task ORDER BY priority desc";
 
          //Get results
          $results = $connection->query($q);
@@ -76,13 +80,13 @@ if(isset($_GET['action'])){
 
         $task = $_POST['desc'];
         $priority = (int)$_POST['priority'];
-        $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+        $date = date("Y-m-d H:i:s");
         $completed = 0;
 
         $q1 = sprintf("INSERT INTO task 
                         (description, priority, dateCreated, completed, dateCompleted) 
                         VALUES ('%s', '%d', '%s', '%d', '%s')",
-                        $task, $priority, CURRENT_TIMESTAMP, $completed,  CURRENT_TIMESTAMP);
+                        $task, $priority, $date, $completed, $date);
 
         $qRs = $conn->query($q1);
 

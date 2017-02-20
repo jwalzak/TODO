@@ -1,0 +1,11 @@
+body{
+    background: #ccc;
+    font-family: 'Monaco Regular';
+    font-size: 25px;
+}
+
+.taskStyle {
+    background: #000fff;
+    font-family: 'Monaco Regular', arial;
+    color: white;
+}
