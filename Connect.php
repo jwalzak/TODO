@@ -23,8 +23,34 @@ if(isset($_GET['action'])){
         toDoList($conn);
     }
     else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
-        newTask($conn);
+        // $a = $_POST;
+        // echo json_encode($_POST);
+        // newEntry($conn);
+        $task = $_POST['desc'];
+        $priority = (int)$_POST['priority'];
+        $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+        $completed = 0;
+
+        $q1 = sprintf("INSERT INTO task 
+                        (description, priority, dateCreated, completed, dateCompleted) 
+                        VALUES ('%s', '%d', '%s', '%d', '%s')",
+                        $task, $priority, $date, $completed,  $date);
+
+        $qRs = $conn->query($q1);
+
+        $id = $connection->insert_id;
+
+        $jsonArray = array(
+            'id' => $id,
+            'task' => $task,
+            'priority' => $priority
+            );
+
+        echo json_encode($jsonArray);
+
     }
+
+    $conn->close();
 }//End isset if
 
 
@@ -41,32 +67,34 @@ if(isset($_GET['action'])){
              //Get each task from the DB
              array_push($listArray, $info);
          }//End while
+
+         $results->close();
         echo json_encode($listArray);
     }//End toDoList
 
-    function newTask($connection){
+    function newEntry($connection){
 
-        echo json_encode($_POST);
-        // $task = $_POST['desc'];
-        // $priority = $_POST['priority'];
-        // $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+        $task = $_POST['desc'];
+        $priority = (int)$_POST['priority'];
+        $date = date("Y-m-d H:i:s", substr("1299762201428", 0, -3));
+        $completed = 0;
 
-        // $q = sprintf("INSERT INTO task 
-        //                 (description, priority, dateCreated, completed, dateCompleted) 
-        //                 VALUES ('%s', '%s', '%s', '%d', '%s')",
-        //                 $task, $priority, $date, 1,  $date);
+        $q1 = sprintf("INSERT INTO task 
+                        (description, priority, dateCreated, completed, dateCompleted) 
+                        VALUES ('%s', '%d', '%s', '%d', '%s')",
+                        $task, $priority, CURRENT_TIMESTAMP, $completed,  CURRENT_TIMESTAMP);
 
-        // $qRs = $conn->query($q);
+        $qRs = $conn->query($q1);
 
-        // $id = $connection->insert_id;
+        $id = $connection->insert_id;
 
-        // $jsonArray = array(
-        //     'id' => $id,
-        //     'task' => $task,
-        //     'priority' => $priority
-        //     );
+        $jsonArray = array(
+            'id' => $id,
+            'task' => $task,
+            'priority' => $priority
+            );
 
-        // echo json_encode(jsonArray);
+        echo json_encode($jsonArray);
 
     }//End newTask
 ?>

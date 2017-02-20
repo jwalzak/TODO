@@ -11,11 +11,10 @@
         <input type="text" id="desc" name="desc" ><label>Task description</label>
         <br/>
         <select name="priority" id="priority">
-            <option value="1">!</option>
-            <option value="2">!!</option>
-            <option value="3">!!!</option>
-            <option value="4">!!!!</option>
-            <option value="5">!!!!!</option>
+            <option name="lower" value="2">!!</option>
+            <option name="middle" value="3">!!!</option>
+            <option name="higher" value="4">!!!!</option>
+            <option name="highest" value="5">!!!!!</option>
         </select>
         <label>Priority</label>
         <br/>
