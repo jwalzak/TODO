@@ -25,22 +25,26 @@ function getTask() {
 
 //Attaches tasks to the HTML document.
 function addTask(content){
-    for(var i = 0; i<content.length; i++){
-        if(content[i].completed == 1){
-        $("#wall").append($("<h3>").addClass("taskStyle").text("Priority: " + content[i].priority));
-        $("#wall").append($("<h3>").text("Description: " + content[i].description));
-        $("#wall").append($("<h3>").text("Date Created: " + content[i].dateCreated));
-        $("#wall").append($("<h3>").text("Date Completed: " + content[i].dateCompleted));
-    }//End for
-}//End if
 
-    for(var i = 0; i<content.length; i++){  
-        if(content[i].completed == 0){  
-            $("#wall").append($("<h3>").addClass("taskStyle").text("Priority: " + content[i].   priority));
-            $("#wall").append($("<h3>").text("Description: " + content[i].description));
-            $("#wall").append($("<h3>").text("Date Created: " + content[i].dateCreated));
-        }//end for
-    }//End if
+    for(var i = 0; i<content.length; i++){ 
+    //Template for inserting the HTML
+    var taskDiv = '<div class="taskStyle" id=' + content[i].id + 
+                 '<h3> Priority: ' + content[i].priority + 
+                 '</h3><h3>Description: ' + content[i].description + 
+                 '</h3><h3>Date Created: ' + content[i].dateCreated; 
+    //For closing the string. Put at the end.
+    //I can separate completed and not completed as the ones that show up
+    var endTask = '</h3></div>';
+    //For completed tasks to show up. Put before endTask and after taskDiv
+    var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
+        if(content[i].completed == 1){
+        $("#wall").append(taskDiv + taskDivCompleted + endTask);
+        }//End if
+
+        else if(content[i].completed == 0){
+            $("#wall").append(taskDiv + endTask);
+        }//End else if
+    }//End for
 }//End function
 
 

@@ -42,7 +42,7 @@ if(isset($_GET['action'])){
          $listArray = array();
 
          //Select String
-         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task";
+         $q = "SELECT id, description, priority, dateCreated, completed, dateCompleted FROM task";
 
          //Get results
          $results = $connection->query($q);
