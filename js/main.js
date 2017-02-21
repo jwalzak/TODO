@@ -7,6 +7,8 @@ $(document).ready(function(){
         $.post("Connect.php?action=newTask", $(this).serialize(), function(res){
             console.log(res);
             //Remove current loaded data.
+            $("#desc").val('');
+            $("#priority").val('');
             $("#wall").empty();
             getTask();
         });

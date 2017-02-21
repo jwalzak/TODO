@@ -2,10 +2,55 @@ body{
     background: #ccc;
     font-family: 'Monaco Regular';
     font-size: 25px;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background: #111909;
+    margin-top: -50px;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+
+}
+
+h1 {
+    font-family: 'Monaco Regular', arial;
+    color: #ccccff;
+    text-align: center;
+    font-size: 75px;
+}
+
+h5 {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: #999fff;
+    font-size: 30px;
 }
 
 .taskStyle {
     background: #000fff;
     font-family: 'Monaco Regular', arial;
-    color: white;
+    color: #fff;
+}
+
+.desc {
+    width: 200px;
+}
+
+.form {
+    padding-bottom: 150px;
+}
+
+.priority {
+    width: 200px;
+}
+
+.input {
+    float: left;
+}
+
+.sort {
+    float: right;
+    margin-right; 50px;
 }
