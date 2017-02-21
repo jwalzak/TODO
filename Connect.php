@@ -23,33 +23,7 @@ if(isset($_GET['action'])){
         toDoList($conn);
     }
     else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
-         // newEntry($conn);
-
-        // This won't run if it is it's own function.
-        $description = $_POST['desc'];
-        $priority = (int)$_POST['priority'];
-        date_default_timezone_get("America/Toronto");
-        $date = date("Y-m-d H:i:s");
-        $completed = 0;
-
-        $q1 = sprintf("INSERT INTO task 
-                        (description, priority, dateCreated, completed, dateCompleted) 
-                        VALUES ('%s', '%d', '%s', '%d', '%s')",
-                        $description, $priority, $date, $completed, $date);
-
-        $qRs = $conn->query($q1);
-
-        $id = $conn->insert_id;
-
-        $jsonArray = array(
-            'id' => $id,
-            'description' => $description,
-            'priority' => $priority,
-            'dateCreated' => $date
-            );
-
-        echo json_encode($jsonArray);
-
+        newEntry($conn);
     }//End else if
 
     else if($_GET['action'] == "priSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
@@ -83,6 +57,31 @@ if(isset($_GET['action'])){
     }//End toDoList
 
     function newEntry($connection){
+        // This won't run if it is it's own function.
+        $description = $_POST['desc'];
+        $priority = (int)$_POST['priority'];
+        date_default_timezone_get("America/Toronto");
+        $date = date("Y-m-d H:i:s");
+        $completed = 0;
+        $default = "default";
+
+        $q1 = sprintf("INSERT INTO task 
+                        (description, priority, dateCreated, completed, dateCompleted) 
+                        VALUES ('%s', '%d', '%s', '%d', '%s')",
+                        $description, $priority, $date, $completed, $default);
+
+        $qRs = $connection->query($q1);
+
+        $id = $connection->insert_id;
+
+        $jsonArray = array(
+            'id' => $id,
+            'description' => $description,
+            'priority' => $priority,
+            'dateCreated' => $date
+            );
+
+        echo json_encode($jsonArray);
     }//End newTask
 
 //Sorts the results by date.

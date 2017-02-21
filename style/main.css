@@ -38,6 +38,12 @@ h5 {
     width: 200px;
 }
 
+.fa, .fa-window-close {
+    font-family: 'Monaco Regular';
+    font-size: 25px;
+    float: right;
+}
+
 .form {
     padding-bottom: 150px;
 }

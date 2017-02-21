@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>//TODO:LIST</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
     <link rel="stylesheet" href="style/main.css">
     <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
