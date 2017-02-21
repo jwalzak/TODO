@@ -31,8 +31,8 @@
         </div>
         <div id="sort" class="sort">
             <h3>Sort</h3>
-            <input type="radio" name="sortPri" id="sortPri" value="sortPri"><label for="sortPri">Priority</label>
-            <input type="radio" name="sortDate" id="sortDate" value="sortDate"><label for="sortDate">Date</label>
+            <input type="radio" name="sort" id="sortPri" value="sortPri"><label for="sortPri">Priority</label>
+            <input type="radio" name="sort" id="sortDate" value="sortDate"><label for="sortDate">Date</label>
         </div>
     </form>
 </div>

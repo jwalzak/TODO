@@ -23,8 +23,6 @@ if(isset($_GET['action'])){
         toDoList($conn);
     }
     else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
-        // $a = $_POST;
-        // echo json_encode($_POST);
          // newEntry($conn);
 
         // This won't run if it is it's own function.
@@ -52,6 +50,14 @@ if(isset($_GET['action'])){
 
         echo json_encode($jsonArray);
 
+    }//End else if
+
+    else if($_GET['action'] == "priSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
+        priSort($conn);
+    }//End else if
+
+    else if($_GET['action'] == "dateSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
+        dateSort($conn);
     }
 
     $conn->close();
@@ -62,7 +68,7 @@ if(isset($_GET['action'])){
          $listArray = array();
 
          //Select String
-         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task ORDER BY priority desc";
+         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task";
 
          //Get results
          $results = $connection->query($q);
@@ -77,28 +83,43 @@ if(isset($_GET['action'])){
     }//End toDoList
 
     function newEntry($connection){
-
-        $task = $_POST['desc'];
-        $priority = (int)$_POST['priority'];
-        $date = date("Y-m-d H:i:s");
-        $completed = 0;
-
-        $q1 = sprintf("INSERT INTO task 
-                        (description, priority, dateCreated, completed, dateCompleted) 
-                        VALUES ('%s', '%d', '%s', '%d', '%s')",
-                        $task, $priority, $date, $completed, $date);
-
-        $qRs = $conn->query($q1);
-
-        $id = $connection->insert_id;
-
-        $jsonArray = array(
-            'id' => $id,
-            'task' => $task,
-            'priority' => $priority
-            );
-
-        echo json_encode($jsonArray);
-
     }//End newTask
+
+//Sorts the results by date.
+    function dateSort($connection){
+        $listArray = array();
+
+         //Select String
+         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task ORDER BY dateCreated desc";
+
+         //Get results
+         $results = $connection->query($q);
+
+         while($info = $results->fetch_assoc()){
+             //Get each task from the DB
+             array_push($listArray, $info);
+         }//End while
+
+         $results->close();
+        echo json_encode($listArray);
+    }//End dateSort
+
+//Sorts the results by priority
+    function priSort($connection){
+        $listArray = array();
+
+         //Select String
+         $q = "SELECT description, priority, dateCreated, completed, dateCompleted FROM task ORDER BY priority desc";
+
+         //Get results
+         $results = $connection->query($q);
+
+         while($info = $results->fetch_assoc()){
+             //Get each task from the DB
+             array_push($listArray, $info);
+         }//End while
+
+         $results->close();
+        echo json_encode($listArray);
+    }//End priSort
 ?>

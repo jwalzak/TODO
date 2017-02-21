@@ -8,11 +8,12 @@ $(document).ready(function(){
             console.log(res);
             //Remove current loaded data.
             $("#desc").val('');
-            $("#priority").val('');
+            $("#priority").val('1');
             $("#wall").empty();
             getTask();
         });
     });
+    sortFunc();
 });
 
 //Gets the json from Connect.php called in the initial load
@@ -41,3 +42,26 @@ function addTask(content){
         }//end for
     }//End if
 }//End function
+
+
+//Sends a php request on change when the radio button is selected
+function sortFunc(){
+    $("input[type=radio][name=sort]").change(function(){
+        if(this.value == "sortPri"){
+            console.log("ding");
+
+            $.post("Connect.php?action=priSort", $(this).serialize(), function(res){
+                console.log(res);
+                $("#wall").empty();
+                addTask(res);
+            });//End post
+        }//End if
+        else if(this.value == "sortDate"){
+            console.log("Date Ding");
+            $.post("Connect.php?action=dateSort", $(this).serialize(), function(res){
+                $("#wall").empty();
+                addTask(res);
+            });//End post
+        }//End else if
+    })//End input function
+}//End sort fun
