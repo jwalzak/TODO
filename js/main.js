@@ -26,6 +26,7 @@ function getTask() {
 //Attaches tasks to the HTML document.
 function addTask(content){
 
+    console.log(content);
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=' + content[i].id + '>' +
@@ -67,3 +68,16 @@ function sortFunc(){
         }//End else if
     })//End input function
 }//End sort func
+
+
+function deleteFunc(){
+    $.post("Connect.php?action=delete", $(this).serialize, function(res){
+
+    });
+}//end deleteFunc
+
+function updateFunc(){
+    $.post("Connect.php?action=update", $(this).serialize, function(res){
+
+    });
+}//End updateFunc

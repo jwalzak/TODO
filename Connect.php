@@ -32,7 +32,15 @@ if(isset($_GET['action'])){
 
     else if($_GET['action'] == "dateSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
         dateSort($conn);
-    }
+    }//End else if
+
+    else if($_GET['action'] == 'delete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        deleteFunc($conn);
+    }//End else if
+
+    else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        updateFunc($conn);
+    }//End else if
 
     $conn->close();
 }//End isset if
@@ -121,4 +129,14 @@ if(isset($_GET['action'])){
          $results->close();
         echo json_encode($listArray);
     }//End priSort
+
+//Deletes the DB entry
+    function deleteFunc($connection){
+
+    }//End deleteFunc
+
+//Updates the completed status of a DB entry
+    function updateFunc($connection){
+        $q = "UPDATE task SET completed = 1 WHERE id=" . $id . ";";
+    }//End updateFunc
 ?>
