@@ -29,24 +29,33 @@ function addTask(content){
     console.log(content);
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
-    var taskDiv = '<div class="taskStyle" id=' + content[i].id + '>' +
-                 '<i class="fa fa-window-close fa-2x closeBox" id="delete' + content[i].id + '"' + ' aria-hidden="true"></i>' +
-                 '<i class="fa fa-plus-square fa-2x closeBox" id="update" aria-hidden="true"></i>' + 
-                 '<h3> Priority: ' + content[i].priority + 
-                 '</h3><h3>Description: ' + content[i].description + 
-                 '</h3><h3>Date Created: ' + content[i].dateCreated; 
+    var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
+
+    var deleteButton = '<div id="' + content[i].id + '" style="height: 70px; width: 70px; float: right;"><i class="fa fa-window-close fa-2x closeBox" aria-hidden="true"></i></div>';
+    var updButton = '<i class="fa fa-plus-square fa-2x closeBox" id="update" aria-hidden="true"></i>';
+    var midInfo = '<h3> Priority: ' + content[i].priority + 
+                  '</h3><h3>Description: ' + content[i].description + 
+                  '</h3><h3>Date Created: ' + content[i].dateCreated; 
+    
+
     //For closing the string. Put at the end.
     var endTask = '</h3></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
         if(content[i].completed == 1){
-            $("#wall").append(taskDiv + taskDivCompleted + endTask);
+            $("#wall").append(taskDiv + deleteButton + updButton + midInfo + taskDivCompleted + endTask);
         }//End if
 
         else if(content[i].completed == 0){
-            $("#wall").append(taskDiv + endTask);
+            $("#wall").append(taskDiv + deleteButton + updButton + midInfo + endTask);
         }//End else if
+        $("#" + content[i].id).click(function(e){
+            console.log("do it");
+            var id = this.id;
+            deleteFunc(id);
+        });
     }//End for
+
 }//End function
 
 
@@ -70,9 +79,11 @@ function sortFunc(){
 }//End sort func
 
 
-function deleteFunc(){
-    $.post("Connect.php?action=delete", $(this).serialize, function(res){
+function deleteFunc(id){
 
+    $.post("Connect.php?action=delete", id.serialize, function(res){
+        console.log(res);
+        getTask();
     });
 }//end deleteFunc
 

@@ -35,11 +35,13 @@ if(isset($_GET['action'])){
     }//End else if
 
     else if($_GET['action'] == 'delete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-        deleteFunc($conn);
+        $id = $_POST['id'];
+        deleteFunc($conn, $id);
     }//End else if
 
     else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-        updateFunc($conn);
+        $id = $_POST['id'];
+        updateFunc($conn, $id);
     }//End else if
 
     $conn->close();
@@ -131,12 +133,17 @@ if(isset($_GET['action'])){
     }//End priSort
 
 //Deletes the DB entry
-    function deleteFunc($connection){
-
+    function deleteFunc($connection, $id){
+        $r = array("it" =>"works");
+        json_encode($r);
     }//End deleteFunc
 
 //Updates the completed status of a DB entry
-    function updateFunc($connection){
-        $q = "UPDATE task SET completed = 1 WHERE id=" . $id . ";";
+    function updateFunc($connection, $id){
+        $info = array();
+        $q = "UPDATE task SET completed = 1 WHERE id='" . $id . "';";
+
+        $results = $connection->query($q);
+        toDoList($connection);
     }//End updateFunc
 ?>
