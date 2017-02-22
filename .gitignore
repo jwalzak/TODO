@@ -25,6 +25,7 @@ $RECYCLE.BIN/
 *.txt
 hand_ins
 js/jquery-3.1.1.js
+style/css
 
 # =========================
 # Operating System Files

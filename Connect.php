@@ -56,11 +56,11 @@ if(isset($_GET['action'])){
         echo json_encode($listArray);
     }//End toDoList
 
+//Updates the database and returns the values.
     function newEntry($connection){
-        // This won't run if it is it's own function.
+        date_default_timezone_get("America/Toronto");
         $description = $_POST['desc'];
         $priority = (int)$_POST['priority'];
-        date_default_timezone_get("America/Toronto");
         $date = date("Y-m-d H:i:s");
         $completed = 0;
         $default = "default";

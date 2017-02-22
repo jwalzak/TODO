@@ -17,7 +17,11 @@
 <div id="form" class="form">
     <form  method="POST" class="task" id="task">
     <div id="input" class="input">
-        <input type="text" class="desc" id="desc" name="desc" ><label for="desc">Task description</label>
+        <label for="desc" class="label">Task description</label>
+        <br/>
+        <textarea name="desc" id="desc" cols="40" rows="5"></textarea>
+        <br/>
+        <label for="priority" class="label">Priority</label>
         <br/>
         <select name="priority" id="priority" class="priority">
             <option name="lowest" value="1" selected="selected">!</option>
@@ -26,13 +30,13 @@
             <option name="higher" value="4">!!!!</option>
             <option name="highest" value="5">!!!!!</option>
         </select>
-        <label for="priority">Priority</label>
         <br/>
         <input type="submit" name="submit" id="submit">
         </div>
         <div id="sort" class="sort">
             <h3>Sort</h3>
             <input type="radio" name="sort" id="sortPri" value="sortPri"><label for="sortPri">Priority</label>
+            <br />
             <input type="radio" name="sort" id="sortDate" value="sortDate"><label for="sortDate">Date</label>
         </div>
     </form>

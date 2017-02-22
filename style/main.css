@@ -29,6 +29,7 @@ h5 {
 }
 
 .taskStyle {
+    padding-top: 10px;
     background: #000fff;
     font-family: 'Monaco Regular', arial;
     color: #fff;
@@ -38,18 +39,10 @@ h5 {
     width: 200px;
 }
 
-.fa, .fa-window-close {
-    font-family: 'Monaco Regular';
-    font-size: 25px;
-    float: right;
-}
-
 .form {
-    padding-bottom: 150px;
-}
-
-.priority {
-    width: 200px;
+    padding-bottom: 230px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .input {
@@ -59,4 +52,14 @@ h5 {
 .sort {
     float: right;
     margin-right; 50px;
+}
+
+.closeBox {
+    color: #000;
+    padding-right: 20px;
+    float: right;
+}
+
+.closeBox:hover {
+    color: #fff;
 }

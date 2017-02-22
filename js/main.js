@@ -6,10 +6,6 @@ $(document).ready(function(){
         //Upload new task to the DB
         $.post("Connect.php?action=newTask", $(this).serialize(), function(res){
             console.log(res);
-            //Remove current loaded data.
-            $("#desc").val('');
-            $("#priority").val('1');
-            $("#wall").empty();
             getTask();
         });
     });
@@ -19,6 +15,10 @@ $(document).ready(function(){
 //Gets the json from Connect.php called in the initial load
 function getTask() {
     $.get("Connect.php?action=list", function(res){
+        //Remove current loaded data.
+        $("#desc").val('');
+        $("#priority").val('1');
+        $("#wall").empty();
         addTask(res);
     });
 }
@@ -28,17 +28,18 @@ function addTask(content){
 
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
-    var taskDiv = '<div class="taskStyle" id=' + content[i].id + 
+    var taskDiv = '<div class="taskStyle" id=' + content[i].id + '>' +
+                 '<i class="fa fa-window-close fa-2x closeBox" id="delete' + content[i].id + '"' + ' aria-hidden="true"></i>' +
+                 '<i class="fa fa-plus-square fa-2x closeBox" id="update" aria-hidden="true"></i>' + 
                  '<h3> Priority: ' + content[i].priority + 
                  '</h3><h3>Description: ' + content[i].description + 
                  '</h3><h3>Date Created: ' + content[i].dateCreated; 
     //For closing the string. Put at the end.
-    //I can separate completed and not completed as the ones that show up
     var endTask = '</h3></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
         if(content[i].completed == 1){
-        $("#wall").append(taskDiv + taskDivCompleted + endTask);
+            $("#wall").append(taskDiv + taskDivCompleted + endTask);
         }//End if
 
         else if(content[i].completed == 0){
@@ -52,20 +53,17 @@ function addTask(content){
 function sortFunc(){
     $("input[type=radio][name=sort]").change(function(){
         if(this.value == "sortPri"){
-            console.log("ding");
-
             $.post("Connect.php?action=priSort", $(this).serialize(), function(res){
-                console.log(res);
-                $("#wall").empty();
-                addTask(res);
-            });//End post
+                    console.log(res);
+                    $("#wall").empty();
+                    addTask(res);
+                });//End post
         }//End if
         else if(this.value == "sortDate"){
-            console.log("Date Ding");
             $.post("Connect.php?action=dateSort", $(this).serialize(), function(res){
                 $("#wall").empty();
                 addTask(res);
             });//End post
         }//End else if
     })//End input function
-}//End sort fun
+}//End sort func
