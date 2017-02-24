@@ -19,34 +19,33 @@ if(isset($_GET['action'])){
     }
 
     //Load data base items.
-    if($_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['action'] == 'list'){
-        toDoList($conn);
-    }
-    else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
-        newEntry($conn);
-    }//End else if
+        if($_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['action'] == 'list'){
+            toDoList($conn);
+        }
+        else if($_SERVER['REQUEST_METHOD'] == 'POST' && $_GET['action'] == 'newTask'){
+            newEntry($conn);
+        }//End else if
 
-    else if($_GET['action'] == "priSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
-        priSort($conn);
-    }//End else if
+        else if($_GET['action'] == "priSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
+            priSort($conn);
+        }//End else if
 
-    else if($_GET['action'] == "dateSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
-        dateSort($conn);
-    }//End else if
+        else if($_GET['action'] == "dateSort" && $_SERVER['REQUEST_METHOD'] == "POST"){
+            dateSort($conn);
+        }//End else if
 
-    else if($_GET['action'] == 'delete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-        $id = $_POST['id'];
-        deleteFunc($conn, $id);
-    }//End else if
+        else if($_GET['action'] == 'delete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
+            $id = $_GET['id'];
+            deleteFunc($conn, $id);
+        }//End else if
 
-    else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-        $id = $_POST['id'];
-        updateFunc($conn, $id);
-    }//End else if
+        else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
+            $id = $_POST['id'];
+            updateFunc($conn, $id);
+        }//End else if
 
     $conn->close();
 }//End isset if
-
 
     function toDoList($connection){
          $listArray = array();
@@ -133,9 +132,11 @@ if(isset($_GET['action'])){
     }//End priSort
 
 //Deletes the DB entry
-    function deleteFunc($connection, $id){
-        $r = array("it" =>"works");
-        json_encode($r);
+    function deleteFunc( $id){
+
+
+        $return = array("id"=>$id);
+        echo json_encode($return);
     }//End deleteFunc
 
 //Updates the completed status of a DB entry

@@ -30,29 +30,28 @@ function addTask(content){
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
-
-    var deleteButton = '<div id="' + content[i].id + '" style="height: 70px; width: 70px; float: right;"><i class="fa fa-window-close fa-2x closeBox" aria-hidden="true"></i></div>';
-    var updButton = '<i class="fa fa-plus-square fa-2x closeBox" id="update" aria-hidden="true"></i>';
+    var deleteRadio = '<label for="delete">Delete</label><input type="radio" name="delUpd' + content[i].id + '"class="delete"><br />';
+    var updateRadio = '<label for="update">Update</label><input type="radio" name="delUpd' + content[i].id + '"class="update">';
     var midInfo = '<h3> Priority: ' + content[i].priority + 
                   '</h3><h3>Description: ' + content[i].description + 
                   '</h3><h3>Date Created: ' + content[i].dateCreated; 
-    
-
     //For closing the string. Put at the end.
     var endTask = '</h3></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
+
         if(content[i].completed == 1){
-            $("#wall").append(taskDiv + deleteButton + updButton + midInfo + taskDivCompleted + endTask);
+            $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + taskDivCompleted + endTask);
+            changeStatus(content[i].id);
         }//End if
 
         else if(content[i].completed == 0){
-            $("#wall").append(taskDiv + deleteButton + updButton + midInfo + endTask);
+            $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + endTask);
+            changeStatus(content[i].id);
         }//End else if
         $("#" + content[i].id).click(function(e){
-            console.log("do it");
             var id = this.id;
-            deleteFunc(id);
+            console.log(id);
         });
     }//End for
 
@@ -76,19 +75,31 @@ function sortFunc(){
             });//End post
         }//End else if
     })//End input function
-}//End sort func
+}//End sortFunc
 
 
-function deleteFunc(id){
+function changeStatus(radioId){
+    var radioName = radioId;
+    $("input[type=radio][name='delUpd"+ radioName + "']").change(function(){
+        $.post("Connect.php?action=delete&id='" + radioId +"'", $(this).serialize(), function(res){
+            console.log(res);
+            getTask();
+        });//End post
+    });//End input
+}
 
-    $.post("Connect.php?action=delete", id.serialize, function(res){
-        console.log(res);
-        getTask();
-    });
-}//end deleteFunc
 
-function updateFunc(){
-    $.post("Connect.php?action=update", $(this).serialize, function(res){
+// function deleteFunc(id){
+//     $("#" + id).closest(".taskStyle").remove();
 
-    });
-}//End updateFunc
+//     $.post("Connect.php?action=delete", id.serialize, function(res){
+//         console.log(res);
+//         getTask();   
+//     });
+// }//end deleteFunc
+
+// function updateFunc(){
+//     $.post("Connect.php?action=update", $(this).serialize, function(res){
+
+//     });
+// }//End updateFunc
