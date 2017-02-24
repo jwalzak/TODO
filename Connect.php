@@ -35,8 +35,7 @@ if(isset($_GET['action'])){
         }//End else if
 
         else if($_GET['action'] == 'delete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-            $id = $_GET['id'];
-            deleteFunc($conn, $id);
+            deleteFunc($conn);
         }//End else if
 
         else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -124,7 +123,7 @@ if(isset($_GET['action'])){
 
          while($info = $results->fetch_assoc()){
              //Get each task from the DB
-             array_push($listArray, $info);
+             array_push($listArray, $info, "yes");
          }//End while
 
          $results->close();
@@ -132,11 +131,13 @@ if(isset($_GET['action'])){
     }//End priSort
 
 //Deletes the DB entry
-    function deleteFunc( $id){
+    function deleteFunc($connection){
+        $infoArray = array("id"=> "99", "succ"=>"success");
+        $id = $_GET['id'];
+        $q = "DELETE FROM task WHERE id=". $id .";";
+        $rs = $connection->query($q); 
 
-
-        $return = array("id"=>$id);
-        echo json_encode($return);
+        echo json_encode($_GET['id']);
     }//End deleteFunc
 
 //Updates the completed status of a DB entry
@@ -145,6 +146,6 @@ if(isset($_GET['action'])){
         $q = "UPDATE task SET completed = 1 WHERE id='" . $id . "';";
 
         $results = $connection->query($q);
-        toDoList($connection);
+        toDoList($info);
     }//End updateFunc
 ?>

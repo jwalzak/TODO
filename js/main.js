@@ -25,8 +25,6 @@ function getTask() {
 
 //Attaches tasks to the HTML document.
 function addTask(content){
-
-    console.log(content);
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
@@ -40,19 +38,19 @@ function addTask(content){
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
 
+        //Shows tasks that have been completed.
+        //Won't show the completed time of something that hasn't been completed.
         if(content[i].completed == 1){
             $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + taskDivCompleted + endTask);
             changeStatus(content[i].id);
         }//End if
-
+        
+        //Will show tasks that have not been completed
         else if(content[i].completed == 0){
             $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + endTask);
             changeStatus(content[i].id);
         }//End else if
-        $("#" + content[i].id).click(function(e){
-            var id = this.id;
-            console.log(id);
-        });
+        
     }//End for
 
 }//End function
@@ -63,7 +61,6 @@ function sortFunc(){
     $("input[type=radio][name=sort]").change(function(){
         if(this.value == "sortPri"){
             $.post("Connect.php?action=priSort", $(this).serialize(), function(res){
-                    console.log(res);
                     $("#wall").empty();
                     addTask(res);
                 });//End post
@@ -79,27 +76,13 @@ function sortFunc(){
 
 
 function changeStatus(radioId){
-    var radioName = radioId;
-    $("input[type=radio][name='delUpd"+ radioName + "']").change(function(){
-        $.post("Connect.php?action=delete&id='" + radioId +"'", $(this).serialize(), function(res){
-            console.log(res);
-            getTask();
-        });//End post
-    });//End input
-}
-
-
-// function deleteFunc(id){
-//     $("#" + id).closest(".taskStyle").remove();
-
-//     $.post("Connect.php?action=delete", id.serialize, function(res){
-//         console.log(res);
-//         getTask();   
-//     });
-// }//end deleteFunc
-
-// function updateFunc(){
-//     $.post("Connect.php?action=update", $(this).serialize, function(res){
-
-//     });
-// }//End updateFunc
+    // if($(this).hasClass("delete")){
+        $("input[type=radio][name='delUpd"+ radioId + "']").change(function(){
+            console.log(this);
+            $.post("Connect.php?action=delete&id='" + radioId + "'", $(this).serialize(), function(res){
+                console.log(res);
+                getTask();
+            });//End post
+        });//End input
+    // }//End if
+}//End changeStatus
