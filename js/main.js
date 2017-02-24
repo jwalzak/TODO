@@ -76,13 +76,23 @@ function sortFunc(){
 
 
 function changeStatus(radioId){
-    // if($(this).hasClass("delete")){
+    //The delete function
+    if($("input[type=radio][name='delUpd"+ radioId + "']").hasClass("delete")){
         $("input[type=radio][name='delUpd"+ radioId + "']").change(function(){
             console.log(this);
             $.post("Connect.php?action=delete&id='" + radioId + "'", $(this).serialize(), function(res){
                 console.log(res);
                 getTask();
             });//End post
-        });//End input
-    // }//End if
+        });//End input change function
+    }//End if
+    //The update function
+    if($("input[type=radio][name='delUpd"+ radioId + "']").hasClass("update")){
+        $("input[type=radio][name='delUpd"+ radioId + "']").change(function(){
+            $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize, function(res){
+                console.log(res);
+                getTask();
+            });//End post function
+        });//End input change function
+    }//End else if
 }//End changeStatus

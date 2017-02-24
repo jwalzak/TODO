@@ -39,8 +39,7 @@ if(isset($_GET['action'])){
         }//End else if
 
         else if($_GET['action'] == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST'){
-            $id = $_POST['id'];
-            updateFunc($conn, $id);
+            updateFunc($conn);
         }//End else if
 
     $conn->close();
@@ -132,7 +131,6 @@ if(isset($_GET['action'])){
 
 //Deletes the DB entry
     function deleteFunc($connection){
-        $infoArray = array("id"=> "99", "succ"=>"success");
         $id = $_GET['id'];
         $q = "DELETE FROM task WHERE id=". $id .";";
         $rs = $connection->query($q); 
@@ -141,11 +139,13 @@ if(isset($_GET['action'])){
     }//End deleteFunc
 
 //Updates the completed status of a DB entry
-    function updateFunc($connection, $id){
+    function updateFunc($connection){
         $info = array();
+        $id = $_GET['id'];
         $q = "UPDATE task SET completed = 1 WHERE id='" . $id . "';";
 
-        $results = $connection->query($q);
+        $rs = $connection->query($q);
         toDoList($info);
+        echo json_endcode($_GET['id'] . " update");
     }//End updateFunc
 ?>
