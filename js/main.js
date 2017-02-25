@@ -83,9 +83,9 @@ function sortFunc(){
 }//End sortFunc
 
 
+//The delete function
 function changeStatus(radioId){
-    //The delete function
-    if($("input[type=radio][name='del"+ radioId + "']").hasClass("delete")){
+     if($("input[type=radio][name='del"+ radioId + "']").hasClass("delete")){
         $("input[type=radio][name='del"+ radioId + "']").change(function(){
             $.post("Connect.php?action=delete&id='" + radioId + "'", $(this).serialize(), function(res){
                 console.log(res);
@@ -96,11 +96,11 @@ function changeStatus(radioId){
 }//End changeStatus
 
 
+//The update function
 function updateStatus(radioId){
-    //The update function
     if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
         $("input[type=radio][name='upd"+ radioId + "']").change(function(){
-            $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize, function(res){
+            $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize(), function(res){
                 console.log(res);
                 getTask();
             });//End post function
