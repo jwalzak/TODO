@@ -26,15 +26,21 @@ function getTask() {
 //Attaches tasks to the HTML document.
 function addTask(content){
     for(var i = 0; i<content.length; i++){ 
+    
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
-    var deleteRadio = '<label for="delete">Delete</label><input type="radio" name="delUpd' + content[i].id + '"class="delete"><br />';
-    var updateRadio = '<label for="update">Update</label><input type="radio" name="delUpd' + content[i].id + '"class="update">';
+
+    var deleteRadio = '<label for="delete">Delete</label><input type="radio" name="del' + content[i].id + '"class="delete"><br />';
+
+    var updateRadio = '<label for="update">Update</label><input type="radio" name="upd' + content[i].id + '"class="update">';
+
     var midInfo = '<h3> Priority: ' + content[i].priority + 
                   '</h3><h3>Description: ' + content[i].description + 
                   '</h3><h3>Date Created: ' + content[i].dateCreated; 
+
     //For closing the string. Put at the end.
     var endTask = '</h3></div>';
+
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
 
@@ -42,12 +48,14 @@ function addTask(content){
         //Won't show the completed time of something that hasn't been completed.
         if(content[i].completed == 1){
             $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + taskDivCompleted + endTask);
+            updateStatus(content[i].id);
             changeStatus(content[i].id);
         }//End if
         
         //Will show tasks that have not been completed
         else if(content[i].completed == 0){
             $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + endTask);
+            updateStatus(content[i].id);
             changeStatus(content[i].id);
         }//End else if
         
@@ -77,22 +85,25 @@ function sortFunc(){
 
 function changeStatus(radioId){
     //The delete function
-    if($("input[type=radio][name='delUpd"+ radioId + "']").hasClass("delete")){
-        $("input[type=radio][name='delUpd"+ radioId + "']").change(function(){
-            console.log(this);
+    if($("input[type=radio][name='del"+ radioId + "']").hasClass("delete")){
+        $("input[type=radio][name='del"+ radioId + "']").change(function(){
             $.post("Connect.php?action=delete&id='" + radioId + "'", $(this).serialize(), function(res){
                 console.log(res);
                 getTask();
             });//End post
         });//End input change function
     }//End if
+}//End changeStatus
+
+
+function updateStatus(radioId){
     //The update function
-    if($("input[type=radio][name='delUpd"+ radioId + "']").hasClass("update")){
-        $("input[type=radio][name='delUpd"+ radioId + "']").change(function(){
+    if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
+        $("input[type=radio][name='upd"+ radioId + "']").change(function(){
             $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize, function(res){
                 console.log(res);
                 getTask();
             });//End post function
         });//End input change function
     }//End else if
-}//End changeStatus
+}//End updateStatus

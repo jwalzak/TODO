@@ -140,12 +140,10 @@ if(isset($_GET['action'])){
 
 //Updates the completed status of a DB entry
     function updateFunc($connection){
-        $info = array();
         $id = $_GET['id'];
-        $q = "UPDATE task SET completed = 1 WHERE id='" . $id . "';";
-
+        $q = "UPDATE task SET completed=1, dateCompleted=CURRENT_DATE WHERE id='$id';";
         $rs = $connection->query($q);
-        toDoList($info);
-        echo json_endcode($_GET['id'] . " update");
+
+        echo json_endcode($_GET['id']);
     }//End updateFunc
 ?>
