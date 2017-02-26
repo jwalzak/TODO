@@ -40,20 +40,17 @@ function addTask(content){
     var complete = '<div class="complete"><p>DONE</p></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
-    var $updateClick = $("<a>").attr('herf', "#").text;
 
         //Shows tasks that have been completed.
         //Won't show the completed time of something that hasn't been completed.
         if(content[i].completed == 1){
             $("#wall").append(complete + taskDiv + deleteRadio + midInfo + taskDivCompleted + endTask);
-            updateStatus(content[i].id);
             changeStatus(content[i].id);
         }//End if
         
         //Will show tasks that have not been completed
         else if(content[i].completed == 0){
-            $("#wall").append(taskDiv + deleteRadio + updateClick + midInfo + endTask);
-            updateStatus(content[i].id);
+            $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + endTask);
             changeStatus(content[i].id);
         }//End else if
         
@@ -87,22 +84,12 @@ function changeStatus(radioId){
             });//End post
         });//End input change function
     }//End if
+    else if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
+        $("input[type=radio][name='upd"+ radioId + "']").change(function(){
+            $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize(), function(res){
+                console.log(res);
+                getTask();
+            });//End post function
+        });//End input change function
+    }//End else if
 }//End changeStatus
-
-$updateClick.click(function(e){
-    e.preventDefault();
-    $.post('Connect.php?action=update', 'update=' + radioId, function(res){
-    console.log(res);
-    });
-});
-
-
-
-  // else if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
-  //       $("input[type=radio][name='upd"+ radioId + "']").change(function(){
-  //           $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize(), function(res){
-  //               console.log(res);
-  //               getTask();
-  //           });//End post function
-  //       });//End input change function
-  //   }//End else if
