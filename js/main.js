@@ -41,13 +41,16 @@ function addTask(content){
     //For closing the string. Put at the end.
     var endTask = '</h3></div>';
 
+    //Display when the task is complete
+    var complete = '<div class="complete"><p>DONE</p></div>';
+
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
 
         //Shows tasks that have been completed.
         //Won't show the completed time of something that hasn't been completed.
         if(content[i].completed == 1){
-            $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + taskDivCompleted + endTask);
+            $("#wall").append(complete + taskDiv + deleteRadio + midInfo + taskDivCompleted + endTask);
             updateStatus(content[i].id);
             changeStatus(content[i].id);
         }//End if
@@ -93,12 +96,7 @@ function changeStatus(radioId){
             });//End post
         });//End input change function
     }//End if
-}//End changeStatus
-
-
-//The update function
-function updateStatus(radioId){
-    if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
+    else if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
         $("input[type=radio][name='upd"+ radioId + "']").change(function(){
             $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize(), function(res){
                 console.log(res);
@@ -106,4 +104,9 @@ function updateStatus(radioId){
             });//End post function
         });//End input change function
     }//End else if
+}//End changeStatus
+
+
+//The update function
+function updateStatus(radioId){
 }//End updateStatus

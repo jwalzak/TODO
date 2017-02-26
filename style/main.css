@@ -63,3 +63,14 @@ h5 {
 .closeBox:hover {
     color: #fff;
 }
+
+.complete {
+    border: 10px solid red;
+    border-radius: 10px;
+    width: 70px;
+    text-align: center;
+    color: red;
+    background: #fff;
+    float: right;
+    margin-right: 15px;
+}
