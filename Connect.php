@@ -122,7 +122,7 @@ if(isset($_GET['action'])){
 
          while($info = $results->fetch_assoc()){
              //Get each task from the DB
-             array_push($listArray, $info, "yes");
+             array_push($listArray, $info);
          }//End while
 
          $results->close();
@@ -140,10 +140,10 @@ if(isset($_GET['action'])){
 
 //Updates the completed status of a DB entry
     function updateFunc($connection){
-        $id = $_GET['id'];
-        $q = "UPDATE task SET completed=1, dateCompleted=CURRENT_DATE WHERE id='$id';";
+        $id = $_POST['updateId'];
+        $q = "UPDATE task SET completed=1, dateCompleted=CURRENT_TIMESTAMP WHERE id='$id';";
         $rs = $connection->query($q);
-
-        echo json_endcode($_GET['id']);
+        $listArray = array("I"=>"win");
+        echo json_encode($listArray);
     }//End updateFunc
 ?>

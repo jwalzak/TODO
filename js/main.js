@@ -26,11 +26,9 @@ function getTask() {
 //Attaches tasks to the HTML document.
 function addTask(content){
     for(var i = 0; i<content.length; i++){ 
-    
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
     var deleteRadio = '<label for="delete">Delete</label><input type="radio" name="del' + content[i].id + '"class="delete"><br />';
-    var updateRadio = '<label for="update">Update</label><input type="radio" name="upd' + content[i].id + '"class="update">';
     var midInfo = '<h3> Priority: ' + content[i].priority + 
                   '</h3><h3>Description: ' + content[i].description + 
                   '</h3><h3>Date Created: ' + content[i].dateCreated; 
@@ -40,6 +38,13 @@ function addTask(content){
     var complete = '<div class="complete"><p>DONE</p></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
+    //Update 
+    var $update =   $("<a>").attr('href', "#").attr('id', content[i].id).text("Update");
+
+    $update.click(function(e){
+        e.preventDefault();
+        updatePost(this.id);
+    });
 
         //Shows tasks that have been completed.
         //Won't show the completed time of something that hasn't been completed.
@@ -50,12 +55,10 @@ function addTask(content){
         
         //Will show tasks that have not been completed
         else if(content[i].completed == 0){
-            $("#wall").append(taskDiv + deleteRadio + updateRadio + midInfo + endTask);
+            $("#wall").append(taskDiv + deleteRadio + midInfo + endTask).append($update);
             changeStatus(content[i].id);
-        }//End else if
-        
+        }//End else if       
     }//End for
-
 }//End function
 
 //Sends a php request on change when the radio button is selected
@@ -84,12 +87,12 @@ function changeStatus(radioId){
             });//End post
         });//End input change function
     }//End if
-    else if($("input[type=radio][name='upd"+ radioId + "']").hasClass("update")){
-        $("input[type=radio][name='upd"+ radioId + "']").change(function(){
-            $.post("Connect.php?action=update&id='" + radioId + "'", $(this).serialize(), function(res){
-                console.log(res);
-                getTask();
-            });//End post function
-        });//End input change function
-    }//End else if
 }//End changeStatus
+
+var updatePost = function(id){
+    $.post("Connect.php?action=update", 'updateId=' + id, function(res){
+        console.log(res);
+        getTask();
+    })
+    console.log("here");
+}
