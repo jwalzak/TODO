@@ -38,6 +38,12 @@
             <br />
             <input type="radio" name="sort" id="sortDate" value="sortDate"><label for="sortDate">Date</label>
         </div>
+        <div class="sort">
+        <h3>All or Completed</h3>
+            <label for="getComplete">Completed</label><input type="radio" name="comAll" value="completed" id="getComplete">
+            <br />
+            <label for="getAll">All Tasks</label><input type="radio" name="comAll" value="all" id="getAll">
+        </div>
     </form>
 </div>
     <div id="wall">

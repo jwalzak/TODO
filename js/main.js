@@ -10,6 +10,7 @@ $(document).ready(function(){
         });
     });
     sortFunc();
+    allCom();
 });
 
 //Gets the json from Connect.php called in the initial load
@@ -21,10 +22,11 @@ function getTask() {
         $("#wall").empty();
         addTask(res);
     });
-}
+}//End getTask
 
 //Attaches tasks to the HTML document.
 function addTask(content){
+    $("#wall").empty();
     for(var i = 0; i<content.length; i++){ 
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
@@ -55,7 +57,7 @@ function addTask(content){
         
         //Will show tasks that have not been completed
         else if(content[i].completed == 0){
-            $("#wall").append(taskDiv + deleteRadio + midInfo + endTask).append($update);
+            $("#wall").append(taskDiv + deleteRadio).append($update).append(midInfo + endTask);
             changeStatus(content[i].id);
         }//End else if       
     }//End for
@@ -66,16 +68,31 @@ function sortFunc(){
     $("input[type=radio][name=sort]").change(function(){
         if(this.value == "sortPri"){
             $.post("Connect.php?action=priSort", $(this).serialize(), function(res){
-                    addTask(res);
+                $("#wall").empty;
+                addTask(res);
                 });//End post
         }//End if
         else if(this.value == "sortDate"){
             $.post("Connect.php?action=dateSort", $(this).serialize(), function(res){
+                $("#wall").clear;
                 addTask(res);
             });//End post
         }//End else if
     })//End input function
 }//End sortFunc
+
+function allCom(){
+    $("input[type=radio][name=comAll]").change(function(){
+        if(this.value == "completed"){
+            $.post("Connect.php?action=complete", $(this).serialize(), function(res){
+                addTask(res);
+            });
+        }//End if
+        else if(this.value == "all"){
+                getTask();
+        }//End else if
+    });
+}//And allCom
 
 //The delete function
 function changeStatus(radioId){
@@ -93,6 +110,6 @@ var updatePost = function(id){
     $.post("Connect.php?action=update", 'updateId=' + id, function(res){
         console.log(res);
         getTask();
-    })
+    });
     console.log("here");
 }

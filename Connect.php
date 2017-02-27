@@ -42,6 +42,10 @@ if(isset($_GET['action'])){
             updateFunc($conn);
         }//End else if
 
+        else if($_GET['action'] == 'complete' && $_SERVER['REQUEST_METHOD'] == 'POST'){
+            compFunc($conn);
+        }//End else if
+
     $conn->close();
 }//End isset if
 
@@ -128,6 +132,26 @@ if(isset($_GET['action'])){
          $results->close();
         echo json_encode($listArray);
     }//End priSort
+
+//Returns completed tasks
+    function compFunc($connection){
+        $listArray = array();
+
+        //Select string
+        $q = "SELECT * FROM task WHERE completed = 1;";
+        $results = $connection->query($q);
+
+        while($info =$results->fetch_assoc()){
+            //Push results to array
+            array_push($listArray, $info);
+        }//end while 
+
+        echo json_encode($listArray);
+
+    }//End compFunc
+
+//Returns all tasks
+
 
 //Deletes the DB entry
     function deleteFunc($connection){
