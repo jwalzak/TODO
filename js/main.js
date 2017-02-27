@@ -1,3 +1,7 @@
+//ToDo task lister
+//Coder: Jason Walzak 
+//Date: February 26 2017
+
 //Onload event.
 $(document).ready(function(){
     getTask();
