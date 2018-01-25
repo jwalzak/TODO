@@ -46,7 +46,7 @@
         </div>
     </form>
 </div>
-    <div id="wall">
+    <div id="wall" class="wall">
     </div>
 </body>
 </html>

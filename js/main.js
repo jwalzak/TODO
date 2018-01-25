@@ -1,5 +1,5 @@
 //ToDo task lister
-//Coder: Jason Walzak 
+//Coder: Jason Walzak
 //Date: February 26 2017
 
 //Onload event.
@@ -31,20 +31,20 @@ function getTask() {
 //Attaches tasks to the HTML document.
 function addTask(content){
     $("#wall").empty();
-    for(var i = 0; i<content.length; i++){ 
+    for(var i = 0; i<content.length; i++){
     //Template for inserting the HTML
     var taskDiv = '<div class="taskStyle" id=div' + content[i].id + '>';
     var deleteRadio = '<label for="delete">Delete</label><input type="radio" name="del' + content[i].id + '"class="delete"><br />';
-    var midInfo = '<h3> Priority: ' + content[i].priority + 
-                  '</h3><h3>Description: ' + content[i].description + 
-                  '</h3><h3>Date Created: ' + content[i].dateCreated; 
+    var midInfo = '<h3> Priority: ' + content[i].priority +
+                  '</h3><h3>Description: ' + content[i].description +
+                  '</h3><h3>Date Created: ' + content[i].dateCreated;
     //For closing the string. Put at the end.
     var endTask = '</h3></div>';
     //Display when the task is complete
     var complete = '<div class="complete"><p>DONE</p></div>';
     //For completed tasks to show up. Put before endTask and after taskDiv
     var taskDivCompleted = '<h3>Date Completed: ' + content[i].dateCompleted;
-    //Update 
+    //Update
     var $update =   $("<a>").attr('href', "#").attr('id', content[i].id).text("Update");
 
     $update.click(function(e){
@@ -58,12 +58,12 @@ function addTask(content){
             $("#wall").append(complete + taskDiv + deleteRadio + midInfo + taskDivCompleted + endTask);
             changeStatus(content[i].id);
         }//End if
-        
+
         //Will show tasks that have not been completed
         else if(content[i].completed == 0){
             $("#wall").append(taskDiv + deleteRadio).append($update).append(midInfo + endTask);
             changeStatus(content[i].id);
-        }//End else if       
+        }//End else if
     }//End for
 }//End function
 
@@ -116,4 +116,4 @@ var updatePost = function(id){
         getTask();
     });
     console.log("here");
-}
+}//End updatePost()
